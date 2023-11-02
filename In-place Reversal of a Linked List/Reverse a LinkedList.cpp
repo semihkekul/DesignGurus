@@ -16,7 +16,24 @@ public:
 class ReverseLinkedList {
 public:
   static ListNode *reverse(ListNode *head) {
-    return nullptr;
+
+    ListNode* curr = head;
+    ListNode* next = head->next;
+
+    curr->next = nullptr;
+
+    while(next)
+    {
+        ListNode* temp = next->next;
+
+        next->next = curr;
+
+        curr = next;
+
+        next = temp;
+    }
+
+    return curr;
   }
 };
 
