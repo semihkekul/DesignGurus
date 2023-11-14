@@ -8,43 +8,35 @@ class Solution
 public:
   vector<vector<int>> combinationSum(vector<int> &candidates, int target)
   {
-    vector<vector<int>> res;
-
-    vector<int> comb;
-    backTracker(candidates, target, 0, 0, comb, res);
+    vector<vector<int>> R;
+   vector<int> comb;
+    backtracker(candidates, target, comb, R, 0);
     
-    
-    return res;
+    return R;
   }
 
 
-  void backTracker(vector<int> &candidates, int target, int index, int currentSum, vector<int>& comb, vector<vector<int>>& result)
+  void backtracker(vector<int> &candidates, int remaining, vector<int> &comb, vector<vector<int>> &R, int index)
   {
-      if(index >= candidates.size()) 
+
+      if(remaining == 0)
+      {
+        R.push_back(comb);
+        return;
+      }
+      if(remaining  < 0)
       {
         return;
       }
 
-      if(currentSum == target)
-      {
-        result.push_back(comb);
-        return;
-      }
-
-      if(currentSum > target)
-      {
-        return;
-      }
-      
       for(int i = index; i < candidates.size(); ++i)
       {
-        int sum = currentSum + candidates[i];
         comb.push_back(candidates[i]);
-        backTracker(candidates, target, i, sum, comb, result);
+        backtracker(candidates, remaining - candidates[i], comb, R, i);
         comb.pop_back();
       }
-      
   }
+
 
 };
 
@@ -122,4 +114,6 @@ int main()
     cout << endl;
   }
   // expected output: []
+
+  return 0;
 }
